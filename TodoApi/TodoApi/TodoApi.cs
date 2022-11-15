@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TodoApi;
 
@@ -15,7 +18,10 @@ internal static class TodoApi
         group.MapGet("/", async (TodoDbContext db, UserId owner) =>
         {
             return await db.Todos.Where(todo => todo.OwnerId == owner.Id).ToListAsync();
-        });
+        })
+        .CacheOutput()
+        .WithDescription("Get all user's Todos")
+        .WithSummary("All user's Todos");
 
         group.MapGet("/{id}", async (TodoDbContext db, int id, UserId owner) =>
         {
@@ -27,6 +33,20 @@ internal static class TodoApi
         })
         .Produces<Todo>()
         .Produces(Status404NotFound);
+
+        group.MapGet("/getMany", async (TodoDbContext db, int[] id, UserId owner) =>
+        {
+            return await db.Todos.Where(todo => id.Contains(todo.Id)).ToListAsync();
+        })
+        .AddEndpointFilter(async (context, next) =>
+        {
+            int[] ids = context.GetArgument<int[]>(1);
+            if (ids.Length % 2 == 0)
+            {
+                return Results.BadRequest("Please provide odd number of IDs");
+            }
+            return await next(context);
+        });
 
         group.MapPost("/", async (TodoDbContext db, NewTodo newTodo, UserId owner) =>
         {

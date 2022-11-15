@@ -20,6 +20,16 @@ builder.Services.Configure<SwaggerGeneratorOptions>(o => o.InferSecuritySchemes 
 // Configure rate limiting
 builder.Services.AddRateLimiting();
 
+// Configure output cache
+builder.Services.AddOutputCache(cacheOptions =>
+{
+    cacheOptions.AddBasePolicy(builder => builder.Expire(TimeSpan.FromSeconds(10)));
+    cacheOptions.AddPolicy("Expire30", builder => builder.Expire(TimeSpan.FromSeconds(30)));
+});
+
+// Configure controllers
+builder.Services.AddControllers();
+
 // Configure OpenTelemetry
 builder.AddOpenTelemetry();
 
@@ -32,6 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRateLimiter();
+app.UseOutputCache();
 
 app.Map("/", () => Results.Redirect("/swagger"));
 
@@ -41,6 +52,8 @@ var group = app.MapGroup("/todos");
 group.MapTodos()
      .RequireAuthorization(pb => pb.RequireClaim("id"))
      .AddOpenApiSecurityRequirement();
+
+app.MapControllers();
 
 // Configure the prometheus endpoint for scraping metrics
 app.MapPrometheusScrapingEndpoint();

@@ -7,7 +7,7 @@ public static class RateLimitExtensions
 {
     private static readonly string Policy = "PerUserRatelimit";
 
-    public static IServiceCollection AddRateLimiting(this IServiceCollection services)
+    public static IServiceCollection AddRateLimiting(this IServiceCollection services, bool log = false)
     {
         return services.AddRateLimiter(options =>
          {
@@ -24,9 +24,9 @@ public static class RateLimitExtensions
                      {
                          ReplenishmentPeriod = TimeSpan.FromSeconds(10),
                          AutoReplenishment = true,
-                         TokenLimit = 100,
-                         TokensPerPeriod = 100,
-                         QueueLimit = 100,
+                         TokenLimit = 10,
+                         TokensPerPeriod = 10,
+                         QueueLimit = 10,
                      };
                  });
              });
