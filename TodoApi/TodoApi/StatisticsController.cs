@@ -38,7 +38,7 @@ namespace TodoApi
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IResult GetStream()
         {
-            return Results.Stream(async s => await s.WriteAsync("streamed"u8.ToArray()));
+            return Results.Stream(async s => await s.WriteAsync("this was streamed as byte sequence"u8.ToArray()));
         }
     }
 }

@@ -1,11 +1,16 @@
-### Get Todos
 @token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Iklnb3IiLCJzdWIiOiJJZ29yIiwianRpIjoiOGIxYTBhYzIiLCJpZCI6Im15aWQiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo0Nzc0MyIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzcxIiwiaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJdLCJuYmYiOjE2Njg0NTc3ODgsImV4cCI6MTY3NjQwNjU4OCwiaWF0IjoxNjY4NDU3Nzg5LCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.mnZFC8St6MhYQzZzqgwwcRhv6D0Hw-w7U7HQvtP0aK0
 
+### Get all todos
 GET http://localhost:5000/todos
 Authorization: Bearer {{token}}
 
-### POST Todo
 
+### Get multiple todos
+GET http://localhost:5000/todos/getMany?id=5&id=6
+Authorization: Bearer {{token}}
+
+
+### POST Todo
 POST http://localhost:5000/todos
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -14,6 +19,21 @@ Content-Type: application/json
     "title": "Get a haircut"
 }
 
+
 ### DELETE Todo
 DELETE http://localhost:5000/todos/4
 Authorization: Bearer {{token}}
+
+
+### GET todo statistics
+GET http://localhost:5000/stats/todo
+
+
+### GET owners statistics
+GET http://localhost:5000/stats/owners
+
+
+### GET stream
+GET http://localhost:5000/stats/stream
+
+###
