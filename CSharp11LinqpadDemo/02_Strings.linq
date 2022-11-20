@@ -2,14 +2,14 @@
 
 #region Raw strings
 string oldJson = "{ \"key\": \"author\", \"value\": \"Igor\" }";
-Util.FixedFont(oldJson).Dump();
+string verbatimString = @"{ ""key"": ""author"", ""value"": ""Igor"" }";
 
-Util.ReadLine();
+Util.FixedFont(oldJson).Dump();
+Util.FixedFont(verbatimString).Dump();
 
 string betterJson = """{ "key": "author", "value": "Igor" }""";
-Util.FixedFont(betterJson).Dump();
 
-Util.ReadLine();
+Util.FixedFont(betterJson).Dump();
 
 string newJson = """
    {
@@ -19,8 +19,6 @@ string newJson = """
    """;
 
 Util.FixedFont(newJson).Dump();
-
-Util.ReadLine();
 
 string newJsonNoIndent = """
    {

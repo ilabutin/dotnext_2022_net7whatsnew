@@ -1,4 +1,6 @@
-<Query Kind="Statements" />
+<Query Kind="Statements">
+  <Namespace>System.Diagnostics.CodeAnalysis</Namespace>
+</Query>
 
 
 var pointWithInitializer = new Point() { X = 1, Y = 2 };

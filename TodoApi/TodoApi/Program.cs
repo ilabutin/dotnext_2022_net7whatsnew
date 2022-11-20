@@ -4,6 +4,8 @@ using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//// Define services
+
 // Configure auth
 builder.Services.AddAuthentication().AddJwtBearer();
 builder.Services.AddAuthorization();
@@ -33,6 +35,8 @@ builder.Services.AddControllers();
 // Configure OpenTelemetry
 builder.AddOpenTelemetry();
 
+//// Define pipeline
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -41,12 +45,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRateLimiter();
 app.UseOutputCache();
+app.UseRateLimiter();
 
 app.Map("/", () => Results.Redirect("/swagger"));
 
-// Configure the APIs
+//// Group APIs
 var group = app.MapGroup("/todos");
 
 group.MapTodos()

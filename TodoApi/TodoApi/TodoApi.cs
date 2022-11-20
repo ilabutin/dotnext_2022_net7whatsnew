@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.AspNetCore.Http.StatusCodes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TodoApi;
 
@@ -15,6 +13,7 @@ internal static class TodoApi
         // Rate limit all of the APIs
         group.RequirePerUserRateLimit();
 
+        //// Add OpenAPI metadata
         group.MapGet("/", async (TodoDbContext db, UserId owner) =>
         {
             return await db.Todos.Where(todo => todo.OwnerId == owner.Id).ToListAsync();
@@ -23,6 +22,7 @@ internal static class TodoApi
         .WithDescription("Get all user's Todos")
         .WithSummary("All user's Todos");
 
+        //// Return multiple result types
         group.MapGet("/{id}", async (TodoDbContext db, int id, UserId owner) =>
         {
             return await db.Todos.FindAsync(id) switch
@@ -34,6 +34,7 @@ internal static class TodoApi
         .Produces<Todo>()
         .Produces(Status404NotFound);
 
+        //// Add filters
         group.MapGet("/getMany", async (TodoDbContext db, int[] id, UserId owner) =>
         {
             return await db.Todos.Where(todo => id.Contains(todo.Id)).ToListAsync();

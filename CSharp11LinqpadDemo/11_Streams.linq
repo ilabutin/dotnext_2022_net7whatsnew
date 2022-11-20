@@ -32,7 +32,6 @@ void Main()
         Console.WriteLine(UTF8Encoding.UTF8.GetString(buffer, 0, offset));
         return;        
       }
-      Console.WriteLine($"Read {read} bytes at offset {offset}");
       
       offset += read;
     }

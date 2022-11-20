@@ -1,6 +1,6 @@
 <Query Kind="Program">
   <Namespace>System.Runtime.InteropServices</Namespace>
-  <RuntimeVersion>6.0</RuntimeVersion>
+  <RuntimeVersion>7.0</RuntimeVersion>
 </Query>
 
 void Main()
@@ -20,3 +20,5 @@ int Logger(string s)
 {
   return s.Length;
 }
+
+// open in LINQPad 5
