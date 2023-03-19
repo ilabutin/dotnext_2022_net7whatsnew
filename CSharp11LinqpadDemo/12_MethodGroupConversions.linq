@@ -21,4 +21,3 @@ int Logger(string s)
   return s.Length;
 }
 
-// open in LINQPad 5

@@ -30,3 +30,5 @@ public class InvokeTest
 
   public static int InvokeMe(int i) => i;
 }
+
+// open in LINQPad 5
